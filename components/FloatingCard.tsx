@@ -11,66 +11,43 @@ interface FloatingCardProps {
   xOffset: 'left' | 'right';
   yOffset: number;
   delay: number;
+  width?: string; 
 }
 
 const colorStyles = {
-  blue: 'bg-blue-50/90 border-blue-200 text-blue-700 dark:bg-blue-900/40 dark:border-blue-800 dark:text-blue-300',
-  orange: 'bg-orange-50/90 border-orange-200 text-orange-700 dark:bg-orange-900/40 dark:border-orange-800 dark:text-orange-300',
-  green: 'bg-green-50/90 border-green-200 text-green-700 dark:bg-green-900/40 dark:border-green-800 dark:text-green-300',
-  purple: 'bg-purple-50/90 border-purple-200 text-purple-700 dark:bg-purple-900/40 dark:border-purple-800 dark:text-purple-300',
-  dark: 'bg-gray-800/90 border-gray-700 text-white dark:bg-gray-800 dark:border-gray-700',
-  slate: 'bg-slate-100/90 border-slate-200 text-slate-700 dark:bg-slate-800/50 dark:border-slate-700 dark:text-slate-300',
+  blue: 'bg-white border-blue-100 text-blue-600',
+  orange: 'bg-white border-orange-100 text-orange-600',
+  green: 'bg-white border-green-100 text-green-600',
+  purple: 'bg-white border-purple-100 text-purple-600',
+  dark: 'bg-slate-900 border-slate-800 text-white',
+  slate: 'bg-white border-slate-100 text-slate-700',
 };
 
-export default function FloatingCard({
-  color,
-  rotation,
-  icon,
-  label,
-  xOffset,
-  yOffset,
-  delay,
+export default function FloatingCard({ 
+  color, rotation, icon, label, xOffset, yOffset, delay, width = "w-48" 
 }: FloatingCardProps) {
-  const getPosition = () => {
-    const leftPos = xOffset === 'left' ? '3%' : 'auto';
-    const rightPos = xOffset === 'right' ? '3%' : 'auto';
-    const topPos = `${yOffset * 100}%`;
-    return { left: leftPos, right: rightPos, top: topPos };
-  };
-
-  const position = getPosition();
-  const floatY = [0, -8, 0];
   const duration = 3 + Math.random() * 2;
-  const delayFloat = delay * 0.5;
+  const floatY = [0, -10, 0];
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.9 }}
-      animate={{ 
-        opacity: 1, 
-        y: 0, 
-        scale: 1,
+      animate={{ opacity: 1, y: floatY, scale: 1 }}
+      transition={{
+        opacity: { duration: 0.5, delay },
+        y: { duration: duration, repeat: Infinity, ease: 'easeInOut', delay: delay },
       }}
-      transition={{ 
-        duration: 0.4, 
-        delay, 
-        ease: 'easeOut',
-        y: {
-          duration: duration,
-          repeat: Infinity,
-          ease: 'easeInOut',
-          delay: delayFloat,
-        }
-      }}
-      whileHover={{ scale: 1.08, rotate: 0, zIndex: 30 }}
-      className={`absolute z-10 ${rotation} cursor-pointer transition-all duration-300`}
-      style={position}
+      whileHover={{ scale: 1.05, zIndex: 50 }}
+      className={`absolute z-10 ${xOffset === 'left' ? 'left-[5%]' : 'right-[5%]'} cursor-pointer`}
+      style={{ top: `${yOffset * 100}%` }}
     >
-      <div
-        className={`flex items-center gap-2.5 rounded-full border px-4 py-2 text-sm font-medium shadow-md backdrop-blur-sm ${colorStyles[color]}`}
-      >
-        <span className="opacity-80">{icon}</span>
-        <span>{label}</span>
+      <div className={`
+        flex items-center gap-3 px-6 py-4 rounded-2xl 
+        shadow-[0_20px_50px_rgba(0,0,0,0.08)] 
+        border ${colorStyles[color]} ${rotation} ${width}
+      `}>
+        <div className="shrink-0">{icon}</div>
+        <span className="font-semibold text-sm whitespace-nowrap">{label}</span>
       </div>
     </motion.div>
   );

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import FloatingCard from './FloatingCard';
 import ThemeToggle from './ThemeToggle';
-import { Gavel, FileText, CheckSquare, Clock, Users, Briefcase } from 'lucide-react';
+import { Gavel, FileText, CheckSquare, ShieldCheck } from 'lucide-react';
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -16,14 +16,15 @@ export default function Hero() {
   if (!mounted) return null;
 
   return (
-    <section className="relative min-h-screen overflow-hidden px-4 py-12 sm:px-6 lg:px-8">
+    <section className="relative min-h-screen overflow-hidden px-4 py-12 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 left-[10%] h-72 w-72 rounded-full bg-blue-200/40 dark:bg-blue-500/10 blur-3xl" />
         <div className="absolute bottom-20 right-[5%] h-96 w-96 rounded-full bg-indigo-200/30 dark:bg-indigo-500/10 blur-3xl" />
       </div>
 
       <div className="mx-auto max-w-7xl">
-        <div className="flex flex-col md:flex-row items-start justify-between gap-12 lg:items-center">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-12 lg:items-center min-h-[calc(100vh-6rem)]">
+          
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -45,29 +46,79 @@ export default function Hero() {
             </p>
           </motion.div>
 
-          <div className="relative flex-1">
-            <div className="relative h-[600px] w-full">
-              <FloatingCard color="blue" rotation="-rotate-6" icon={<Gavel size={16} />} label="Matters" xOffset="left" yOffset={0.15} delay={0.1} />
-              <FloatingCard color="orange" rotation="rotate-3" icon={<FileText size={16} />} label="Documents" xOffset="right" yOffset={0.25} delay={0.2} />
-              <FloatingCard color="green" rotation="-rotate-2" icon={<CheckSquare size={16} />} label="Tasks" xOffset="left" yOffset={0.55} delay={0.3} />
-              <FloatingCard color="purple" rotation="rotate-5" icon={<Clock size={16} />} label="Billing" xOffset="right" yOffset={0.65} delay={0.4} />
+          <div className="relative flex-1 w-full h-[550px] lg:h-[600px]">
+            
+            <FloatingCard 
+              color="orange" 
+              rotation={-12} 
+              icon={<Gavel size={20} />} 
+              label="Matters" 
+              leftOffset="0%" 
+              topOffset="32%" 
+              delay={0.1} 
+            />
 
-              <motion.div
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                className="absolute left-1/2 top-1/2 z-20 w-80 -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-gray-200 bg-white/95 p-4 shadow-2xl backdrop-blur-sm"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">JD</div>
-                  <div>
-                    <p className="font-semibold text-gray-900">John Doe - Portal</p>
-                    <p className="text-xs text-gray-500">MAT-2233 • 2h ago</p>
-                  </div>
+            <FloatingCard 
+              color="blue" 
+              rotation={14} 
+              icon={<ShieldCheck size={20} />} 
+              label="Billing" 
+              leftOffset="38%" 
+              topOffset="8%" 
+              delay={0.2} 
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: 30, scale: 0.95, rotate: 2 }}
+              animate={{ 
+                opacity: 1, 
+                y: [0, -6, 0], 
+                scale: 1 
+              }}
+              transition={{ 
+                opacity: { duration: 0.5, delay: 0.3 },
+                scale: { duration: 0.5, delay: 0.3 },
+                y: { duration: 4.2, repeat: Infinity, ease: 'easeInOut' }
+              }}
+              whileHover={{ scale: 1.04, zIndex: 40 }}
+              className="absolute left-[32%] top-[40%] z-20 w-80 rounded-2xl border border-indigo-200/50 bg-indigo-100/80 p-4 shadow-xl backdrop-blur-md dark:bg-slate-900/90 dark:border-slate-800"
+            >
+              <div className="flex items-start gap-3">
+                <div className="w-1 h-10 bg-orange-500 rounded-full shrink-0 mt-0.5" />
+                
+                <div className="h-9 w-9 rounded-full bg-slate-300 dark:bg-slate-700 overflow-hidden shrink-0 flex items-center justify-center text-sm">
+                  👤
                 </div>
-                <p className="mt-3 text-sm text-gray-600">Hey! Could you please review a document for me?</p>
-              </motion.div>
-            </div>
+                
+                <div className="flex flex-col min-w-0">
+                  <p className="font-bold text-xs text-gray-900 dark:text-white truncate">John Doe - Portal</p>
+                  <p className="text-[11px] text-gray-600 dark:text-gray-300 mt-0.5 line-clamp-2 leading-normal">
+                    Hey! Could you please review a document for me?
+                  </p>
+                  <p className="text-[10px] text-gray-400 mt-1">MAT-2233 • 2h ago</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <FloatingCard 
+              color="tasks-dark" 
+              rotation={-5} 
+              icon={<CheckSquare size={20} />} 
+              label="Tasks" 
+              leftOffset="12%" 
+              topOffset="68%" 
+              delay={0.4} 
+            />
+            <FloatingCard 
+              color="docs-dark" 
+              rotation={-8} 
+              icon={<FileText size={20} />} 
+              label="Documents" 
+              leftOffset="56%" 
+              topOffset="62%" 
+              delay={0.5} 
+            />
+
           </div>
         </div>
       </div>

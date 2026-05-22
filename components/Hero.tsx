@@ -49,6 +49,39 @@ export default function Hero() {
           <div className="relative flex-1 w-full h-[550px] lg:h-[600px]">
             
             <FloatingCard 
+              color="skeleton" 
+              rotation={4} 
+              icon={null} 
+              label="" 
+              leftOffset="78%" 
+              topOffset="2%" 
+              delay={0.6} 
+              customWidth="w-64 md:w-80"
+            />
+
+            <FloatingCard 
+              color="skeleton" 
+              rotation={2} 
+              icon={null} 
+              label="" 
+              leftOffset="68%" 
+              topOffset="24%" 
+              delay={0.7} 
+              customWidth="w-80 md:w-[420px]"
+            />
+
+            <FloatingCard 
+              color="skeleton" 
+              rotation={1} 
+              icon={null} 
+              label="" 
+              leftOffset="72%" 
+              topOffset="52%" 
+              delay={0.8} 
+              customWidth="w-72 md:w-[380px]"
+            />
+
+            <FloatingCard 
               color="orange" 
               rotation={-12} 
               icon={<Gavel size={20} />} 
@@ -109,6 +142,7 @@ export default function Hero() {
               topOffset="68%" 
               delay={0.4} 
             />
+
             <FloatingCard 
               color="docs-dark" 
               rotation={-8} 
